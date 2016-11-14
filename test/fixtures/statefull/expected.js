@@ -1,24 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 
-export default class Statefull extends Component {
+export default class Example extends Component {
   render() {
-    const { children, className } = this.props;
-
-    return React.createElement(
-      'div',
-      { className: className },
-      children
-    );
+    return null;
   }
 }
 
-Statefull._meta = {
-  name: 'Component',
-  type: META.TYPES.ELEMENT,
-  props: ['children', 'className']
-};
+Example.handledProps = ['children', 'className'];
 
-Statefull.propTypes = {
+Example.propTypes = {
   /** Primary content. */
   children: PropTypes.node,
 

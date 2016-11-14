@@ -1,20 +1,15 @@
-function Component(props) {
-  const {children, className} = props
+import React, { PropTypes } from 'react';
 
-  return <div className={className}>{children}</div>
+function Example() {
+  return null;
 }
 
-Component._meta = {
-  name: 'Component',
-  type: META.TYPES.ELEMENT,
-}
-
-Component.propTypes = {
+Example.propTypes = {
   /** Primary content. */
   children: PropTypes.node,
 
   /** Additional classes. */
-  className: PropTypes.string,
+  className: PropTypes.string
 }
 
-export default Component
+export default Example;

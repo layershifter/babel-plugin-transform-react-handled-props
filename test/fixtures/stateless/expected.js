@@ -1,20 +1,12 @@
-function Component(props) {
-  const { children, className } = props;
+import React, { PropTypes } from 'react';
 
-  return React.createElement(
-    'div',
-    { className: className },
-    children
-  );
+function Example() {
+  return null;
 }
 
-Component._meta = {
-  name: 'Component',
-  type: META.TYPES.ELEMENT,
-  props: ['children', 'className']
-};
+Example.handledProps = ['children', 'className'];
 
-Component.propTypes = {
+Example.propTypes = {
   /** Primary content. */
   children: PropTypes.node,
 
@@ -22,4 +14,4 @@ Component.propTypes = {
   className: PropTypes.string
 };
 
-export default Component;
+export default Example;
