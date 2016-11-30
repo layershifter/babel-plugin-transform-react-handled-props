@@ -3,6 +3,7 @@
     ["../../src"]
   ],
   "presets": [
-    "react"
+    "react",
+    "stage-0"
   ]
 }
