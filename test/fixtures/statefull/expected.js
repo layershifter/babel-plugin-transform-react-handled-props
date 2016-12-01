@@ -9,9 +9,6 @@ export default class Example extends Component {
 Example.handledProps = ['children', 'className'];
 
 Example.propTypes = {
-  /** Primary content. */
   children: PropTypes.node,
-
-  /** Additional classes. */
   className: PropTypes.string
 };

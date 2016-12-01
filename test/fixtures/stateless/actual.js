@@ -5,10 +5,7 @@ function Example() {
 }
 
 Example.propTypes = {
-  /** Primary content. */
   children: PropTypes.node,
-
-  /** Additional classes. */
   className: PropTypes.string
 }
 

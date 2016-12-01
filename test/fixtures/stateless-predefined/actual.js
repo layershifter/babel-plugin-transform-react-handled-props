@@ -4,11 +4,10 @@ function Example() {
   return null;
 }
 
-Example.handledProps = ['children', 'className'];
+Example.handledProps = ['className'];
 
 Example.propTypes = {
   children: PropTypes.node,
-  className: PropTypes.string
-};
+}
 
 export default Example;
