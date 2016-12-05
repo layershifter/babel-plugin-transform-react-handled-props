@@ -1,53 +1,66 @@
+import _ from 'lodash'
+
 export default function ({types: t}) {
-  const visited = {}
-
-  const getEntry = (name) => {
-    if (!visited[name]) visited[name] = {
-      name,
-      handled: [],
-      point: null,
-    }
-
-    return visited[name]
-  }
-
   return {
     visitor: {
-      Program(path) {
-        path.traverse({
-          AssignmentExpression(assignment) {
-            const {left, right} = assignment.node
+      Program(programPath) {
+        const handledProps = {}
 
-            if (!t.isMemberExpression(left) || !t.isObjectExpression(right)) return
-            if (!t.isIdentifier(left.object)) return
-            if (!t.isIdentifier(left.property, {name: 'propTypes'})) return
+        const getHandledProps = (identifier) => {
+          if (!handledProps[identifier]) handledProps[identifier] = []
+          return handledProps[identifier]
+        }
 
-            const entry = getEntry(left.object.name)
-            const {properties} = right
+        const generateExpression = (identifier) => {
+          const props = _.uniq(handledProps[identifier])
+          const array = t.arrayExpression(props.map(name => t.stringLiteral(name)))
 
-            properties.forEach(property => {
-              entry.handled.push(property.key.name)
-            })
+          return t.objectProperty(t.identifier('handledProps'), array)
+        }
+
+        programPath.traverse({
+          AssignmentExpression(path) {
+            const {left, right} = path.node
+
+            if (!t.isMemberExpression(left) || !t.isIdentifier(left.property, {name: 'handledProps'})) return
+            if (!t.isArrayExpression(right)) path.buildCodeFrameError('`handledProps` must be an array')
+
+            const {name: identifier} = left.object
+            const {elements} = right
+            const handledProps = getHandledProps(identifier)
+
+            elements.forEach(element => handledProps.push(element.value))
           },
         })
 
-        // path.traverse({
-        //   AssignmentExpression(assignPath) {
-        //     const { left, right } = assignPath.node
-        //
-        //     if (!t.isMemberExpression(left) || !t.isObjectExpression(right)) return
-        //     if (!t.isIdentifier(left.property, { name: '_meta' })) return
-        //
-        //     const { properties } = right
-        //
-        //     const propsArray = t.arrayExpression(
-        //       propsNames.map(propName => t.stringLiteral(propName))
-        //     )
-        //     const propsEntry = t.objectProperty(t.identifier('props'), propsArray)
-        //
-        //     properties.push(propsEntry)
-        //   },
-        // })
+        programPath.traverse({
+          AssignmentExpression(path) {
+            const {left, right} = path.node
+
+            if (!t.isMemberExpression(left)) return
+            if (!t.isIdentifier(left.property)) return
+
+            const {name} = left.property
+
+            if (name !== 'defaultProps' && name !== 'propTypes') return
+            if (!t.isObjectExpression(right)) path.buildCodeFrameError('`handledProps` must be an array')
+
+            const {name: identifier} = left.object
+            const {properties} = right
+            const handledProps = getHandledProps(identifier)
+
+            properties.forEach(property => handledProps.push(property.key.name))
+          },
+        })
+
+        programPath.traverse({
+          FunctionDeclaration(path) {
+            const {name} = path.node.id
+
+            if (handledProps.hasOwnProperty(name)) return
+            path.insertAfter(generateExpression(name))
+          },
+        })
       },
     },
   }
