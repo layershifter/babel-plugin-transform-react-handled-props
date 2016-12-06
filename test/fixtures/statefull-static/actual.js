@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 
 export default class Example extends Component {
+  static handledProps = ['className']
+
   render() {
     return null;
   }
 }
-Example.handledProps = ['className', 'children']
 
 Example.propTypes = {
   children: PropTypes.node

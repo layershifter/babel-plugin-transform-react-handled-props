@@ -9,9 +9,9 @@ export function Second() {
 }
 
 First.propTypes = {
-  children: PropTypes.node,
-}
+  children: PropTypes.node
+};
 
 Second.propTypes = {
-  children: PropTypes.node,
-}
+  children: PropTypes.node
+};

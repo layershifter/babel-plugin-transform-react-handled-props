@@ -4,18 +4,16 @@ export function First() {
   return null;
 }
 
-First.handledProps = ['children'];
-
+First.handledProps = ['children']
 export function Second() {
   return null;
 }
 
-Second.handledProps = ['children'];
-
+Second.handledProps = ['children']
 First.propTypes = {
-  children: PropTypes.node,
-}
+  children: PropTypes.node
+};
 
 Second.propTypes = {
-  children: PropTypes.node,
-}
+  children: PropTypes.node
+};
