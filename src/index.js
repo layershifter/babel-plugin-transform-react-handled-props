@@ -1,20 +1,33 @@
-import _ from 'lodash'
+import Store from './Store'
 
 export default function ({ types: t }) {
+  const isHandledPropsAssignment = (path) => {
+    const { left, right } = path.node
+
+    if (!t.isMemberExpression(left) || !t.isIdentifier(left.property, { name: 'handledProps' })) return false
+    if (!t.isArrayExpression(right)) path.buildCodeFrameError('`handledProps` must be an array')
+
+    return true
+  }
+
+  const isPropsAssigment = (path) => {
+    const { left, right } = path.node
+
+    if (!t.isMemberExpression(left) || !t.isIdentifier(left.property)) return false
+    const { name } = left.property
+    if (name !== 'defaultProps' && name !== 'propTypes') return false
+    if (!t.isObjectExpression(right)) path.buildCodeFrameError('`defaultProps` and `propTypes` must be an array')
+
+    return true
+  }
+
   return {
     visitor: {
       Program(programPath) {
-        const handledProps = {}
-
-        const addProps = (identifier, prop) => {
-          if (!handledProps[identifier]) handledProps[identifier] = []
-          handledProps[identifier].push(prop)
-        }
+        const store = new Store()
 
         const generateExpression = (identifier) => {
-          const handled = _.uniq(handledProps[identifier]).sort()
-
-          const props = handled.map(prop => t.stringLiteral(prop))
+          const props = store.get(identifier).map(prop => t.stringLiteral(prop))
           const left = t.memberExpression(t.identifier(identifier), t.identifier('handledProps'))
           const expression = t.assignmentExpression('=', left, t.arrayExpression(props))
 
@@ -23,16 +36,26 @@ export default function ({ types: t }) {
 
         programPath.traverse({
           AssignmentExpression(path) {
-            const { left, right } = path.node
+            const {node} = path
 
-            if (!t.isMemberExpression(left) || !t.isIdentifier(left.property, { name: 'handledProps' })) return
-            if (!t.isArrayExpression(right)) path.buildCodeFrameError('`handledProps` must be an array')
+            if(isHandledPropsAssignment(path)) {
+              const { left, right } = node
+              const { name: identifier } = left.object
+              const { elements } = right
 
-            const { name: identifier } = left.object
-            const { elements } = right
+              elements.forEach(element => store.add(identifier, element.value))
+              path.remove()
 
-            elements.forEach(element => addProps(identifier, element.value))
-            path.remove()
+              return
+            }
+
+            if(isPropsAssigment(path)) {
+              const {left, right} = node
+              const {name: identifier} = left.object
+              const {properties} = right
+
+              properties.forEach(property => store.add(identifier, property.key.name))
+            }
           },
           ClassProperty(path) {
             const { key, value } = path.node
@@ -44,31 +67,12 @@ export default function ({ types: t }) {
             const { name: identifier } = declaration.node.id
             const { elements } = value
 
-            elements.forEach(element => addProps(identifier, element.value))
+            elements.forEach(element => store.add(identifier, element.value))
             path.remove()
           },
         })
 
         programPath.traverse({
-          AssignmentExpression(path) {
-            const { left, right } = path.node
-
-            if (!t.isMemberExpression(left)) return
-            if (!t.isIdentifier(left.property)) return
-
-            const { name } = left.property
-
-            if (name !== 'defaultProps' && name !== 'propTypes') return
-            if (!t.isObjectExpression(right)) {
-              path.buildCodeFrameError(
-              '`defaultProps` and `propTypes` must be an array'
-            )}
-
-            const { name: identifier } = left.object
-            const { properties } = right
-
-            properties.forEach(property => addProps(identifier, property.key.name))
-          },
           ClassProperty(path) {
             const { key, value } = path.node
             const { name } = key
@@ -83,7 +87,7 @@ export default function ({ types: t }) {
             const { name: identifier } = declaration.node.id
             const { properties } = value
 
-            properties.forEach(property => addProps(identifier, property.key.name))
+            properties.forEach(property => store.add(identifier, property.key.name))
           },
         })
 
@@ -91,16 +95,16 @@ export default function ({ types: t }) {
           ClassDeclaration(path) {
             const { name } = path.node.id
 
-            if (!handledProps.hasOwnProperty(name)) return
-            if (t.isExportDefaultDeclaration(path.parentPath)) path = path.parentPath
+            if (!store.has(name)) return
+            if (t.isExportDeclaration(path.parentPath)) path = path.parentPath
 
             path.insertAfter(generateExpression(name))
           },
           FunctionDeclaration(path) {
             const { name } = path.node.id
 
-            if (!handledProps.hasOwnProperty(name)) return
-            if (t.isExportNamedDeclaration(path.parentPath)) path = path.parentPath
+            if (!store.has(name)) return
+            if (t.isExportDeclaration(path.parentPath)) path = path.parentPath
             path.insertAfter(generateExpression(name))
           },
         })
