@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 function Example() {
   return null;
 }
-Example.handledProps = ['className', 'children']
+Example.handledProps = ['children', 'className'];
 
 Example.propTypes = {
   children: PropTypes.node

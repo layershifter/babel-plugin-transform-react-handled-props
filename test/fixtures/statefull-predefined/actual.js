@@ -5,7 +5,7 @@ export default class Example extends Component {
     return null;
   }
 }
-Example.handledProps = ['className']
+Example.handledProps = ['className'];
 Example.propTypes = {
   children: PropTypes.node
 };
