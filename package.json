@@ -1,10 +1,14 @@
 {
+  "name": "babel-plugin-transform-react-handled-props",
   "version": "0.0.0",
-  "description": "",
-  "repository": "layershifter/babel-plugin-sui-props",
-  "author": "Alexander Fedyashov <a@fedyashov.com>",
+  "description": "Generates handledProps from defaultProps and propTypes during the build",
   "main": "lib/index.js",
+  "files": [
+    "lib",
+    "src"
+  ],
   "dependencies": {
+    "babel-types": "^6.20.0",
     "lodash": "^4.17.2"
   },
   "devDependencies": {
@@ -14,18 +18,34 @@
     "babel-preset-stage-0": "^6.3.13",
     "eslint": "^3.9.1",
     "eslint-config-ta": "^5.2.0",
-    "mocha": "^3.1.2"
+    "mocha": "^3.1.2",
+    "rimraf": "^2.5.4",
+    "ta-scripts": "^2.5.2"
   },
   "scripts": {
-    "clean": "rm -rf lib",
+    "clean": "rimraf lib",
     "build": "babel src -d lib",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
+    "release:major": "npm run prerelease && ta-script npm/release.sh major",
+    "release:minor": "npm run prerelease && ta-script npm/release.sh minor",
+    "release:patch": "npm run prerelease && ta-script npm/release.sh patch",
     "test": "mocha --compilers js:babel-register",
     "test:watch": "npm run test -- --watch",
-    "prepublish": "npm run clean && npm run build"
+    "prerelease": "npm run clean && npm run build"
   },
   "keywords": [
-    "babel-plugin"
-  ]
+    "babel",
+    "babel-plugin",
+    "react",
+    "defaultProps",
+    "handledProps",
+    "propTypes"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://github.com:layershifter/babel-plugin-transform-react-handled-props.git"
+  },
+  "author": "Alexander Fedyashov <a@fedyashov.com>",
+  "license": "MIT"
 }
