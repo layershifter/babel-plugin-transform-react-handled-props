@@ -1,33 +1,26 @@
+import { trim, startCase } from 'lodash'
 import assert from 'assert'
 import { transformFileSync } from 'babel-core'
 import fs from 'fs'
-import { describe, it } from 'mocha'
 import path from 'path'
 
-function trim(str) {
-  return str.replace(/^\s+|\s+$/, '')
-}
+const fixturesDir = path.join(__dirname, 'fixtures')
 
-const testCase = (fixtureDir, caseName) => {
-  it(`should pass ${caseName.split('-').join(' ')}`, () => {
-    const actualPath = path.join(fixtureDir, 'actual.js')
+const fixtureAssert = (fixtureDir, assertName) => it(`should pass ${assertName}`, () => {
+  const actualPath = path.join(fixtureDir, 'actual.js')
+  const expectedPath = path.join(fixtureDir, 'expected.js')
 
-    const actual = transformFileSync(actualPath).code
-    const expected = fs.readFileSync(
-      path.join(fixtureDir, 'expected.js')
-    ).toString()
+  const actual = transformFileSync(actualPath).code
+  const expected = fs.readFileSync(expectedPath).toString()
 
-    assert.equal(trim(actual), trim(expected))
-  })
-}
-
+  assert.equal(trim(actual), trim(expected))
+})
 
 describe('fixtures', () => {
-  const fixturesDir = path.join(__dirname, 'fixtures')
-
-  fs.readdirSync(fixturesDir).forEach((caseName) => {
+  fs.readdirSync(fixturesDir).forEach(caseName => {
     const fixtureDir = path.join(fixturesDir, caseName)
+    const assertName = startCase(caseName)
 
-    if (fs.lstatSync(fixtureDir).isDirectory()) testCase(fixtureDir, caseName)
+    if (fs.lstatSync(fixtureDir).isDirectory()) fixtureAssert(fixtureDir, assertName)
   })
 })

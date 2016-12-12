@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { has, uniq } from 'lodash'
 
 export default class Store {
   props = {}
@@ -8,7 +8,7 @@ export default class Store {
     this.props[name].push(property)
   }
 
-  has = name => _.has(this.props, name)
+  has = name => has(this.props, name)
 
-  get = name => _.uniq(this.props[name]).sort()
+  get = name => uniq(this.props[name]).sort()
 }
