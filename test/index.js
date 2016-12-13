@@ -1,7 +1,7 @@
-import { trim, startCase } from 'lodash'
 import assert from 'assert'
 import { transformFileSync } from 'babel-core'
 import fs from 'fs'
+import { trim, startCase } from 'lodash'
 import path from 'path'
 
 const fixturesDir = path.join(__dirname, 'fixtures')
