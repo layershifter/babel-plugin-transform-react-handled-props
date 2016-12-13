@@ -44,8 +44,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+ssh://github.com:layershifter/babel-plugin-transform-react-handled-props.git"
+    "url": "git+ssh://github.com/layershifter/babel-plugin-transform-react-handled-props.git"
   },
   "author": "Alexander Fedyashov <a@fedyashov.com>",
+  "homepage": "https://github.com/layershifter/babel-plugin-transform-react-handled-props",
   "license": "MIT"
 }
