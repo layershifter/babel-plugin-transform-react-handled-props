@@ -17,9 +17,9 @@ export default function ({ types: t }) {
           AssignmentExpression(path) {
             const { left, right } = path.node
             const { object, property } = left
-            const { name: identifier } = object
 
-            if (isHandledAssignment(left, right, property)) {
+            if (isHandledAssignment(path, {left, right, property})) {
+              const { name: identifier } = object
               const { elements } = right
 
               elements.forEach(element => store.add(identifier, element.value))
@@ -28,15 +28,17 @@ export default function ({ types: t }) {
               return
             }
 
-            if (isPropsAssignment(left, right, property)) {
+            if (isPropsAssignment(path, {left, right, property})) {
+              const { name: identifier } = object
               const { properties } = right
+
               properties.forEach(item => store.add(identifier, item.key.name))
             }
           },
           ClassProperty(path) {
             const { key, value } = path.node
 
-            if (isHandledProperty(key, value, path.node.static)) {
+            if (isHandledProperty(path, {key, value})) {
               const { elements } = value
 
               elements.forEach(element => store.add(findClassIdentifier(path), element.value))
@@ -45,7 +47,7 @@ export default function ({ types: t }) {
               return
             }
 
-            if (isPropsProperty(key, value, path.node.static)) {
+            if (isPropsProperty(path, {key, value})) {
               const { properties } = value
               properties.forEach(property => store.add(findClassIdentifier(path), property.key.name))
             }
