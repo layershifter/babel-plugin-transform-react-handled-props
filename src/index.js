@@ -3,6 +3,7 @@ import {
   isHandledProperty,
   isPropsAssignment,
   isPropsProperty,
+  isReactImport
 } from './assertions'
 import { findClassIdentifier, generateExpression } from './helpers'
 import Store from './Store'
@@ -11,7 +12,19 @@ export default function ({ types: t }) {
   return {
     visitor: {
       Program(programPath) {
+        let hasImport = false
         const store = new Store()
+
+        programPath.traverse({
+          ImportDeclaration(path) {
+            if(isReactImport(path)) {
+              hasImport = true
+              path.stop()
+            }
+          }
+        })
+
+        if(!hasImport) return
 
         programPath.traverse({
           AssignmentExpression(path) {
