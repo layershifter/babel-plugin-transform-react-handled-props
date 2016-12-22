@@ -3,10 +3,15 @@ import {
   isHandledProperty,
   isPropsAssignment,
   isPropsProperty,
-  isReactImport
 } from './assertions'
 import { findClassIdentifier, generateExpression } from './helpers'
 import Store from './Store'
+import {
+  getIdentifier,
+  isReactClass,
+  isReactFunction,
+  isReactImport,
+} from './util'
 
 export default function ({ types: t }) {
   return {
@@ -17,21 +22,28 @@ export default function ({ types: t }) {
 
         programPath.traverse({
           ImportDeclaration(path) {
-            if(isReactImport(path)) {
+            if (isReactImport(path)) {
               hasImport = true
               path.stop()
             }
-          }
+          },
         })
 
-        if(!hasImport) return
+        if (!hasImport) return
+
+        programPath.traverse({
+          'Class|Function'(path) {
+            if (isReactClass(path)) console.log(getIdentifier(path))
+            if (isReactFunction(path)) console.log(getIdentifier(path))
+          },
+        })
 
         programPath.traverse({
           AssignmentExpression(path) {
             const { left, right } = path.node
             const { object, property } = left
 
-            if (isHandledAssignment(path, {left, right, property})) {
+            if (isHandledAssignment(path, { left, right, property })) {
               const { name: identifier } = object
               const { elements } = right
 
@@ -41,7 +53,7 @@ export default function ({ types: t }) {
               return
             }
 
-            if (isPropsAssignment(path, {left, right, property})) {
+            if (isPropsAssignment(path, { left, right, property })) {
               const { name: identifier } = object
               const { properties } = right
 
@@ -51,7 +63,7 @@ export default function ({ types: t }) {
           ClassProperty(path) {
             const { key, value } = path.node
 
-            if (isHandledProperty(path, {key, value})) {
+            if (isHandledProperty(path, { key, value })) {
               const { elements } = value
 
               elements.forEach(element => store.add(findClassIdentifier(path), element.value))
@@ -60,7 +72,7 @@ export default function ({ types: t }) {
               return
             }
 
-            if (isPropsProperty(path, {key, value})) {
+            if (isPropsProperty(path, { key, value })) {
               const { properties } = value
               properties.forEach(property => store.add(findClassIdentifier(path), property.key.name))
             }
