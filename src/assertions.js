@@ -1,9 +1,5 @@
 import * as t from 'babel-types'
 
-// const getBody = ({body = {body: []}}) => body.body
-//
-// const getRenderMethod = node => getBody(node).find(({key}) => t.isIdentifier(key, {name: 'render'}))
-
 const expectStatic = (path, { key, isStatic }) => !isStatic && path.buildCodeFrameError(`'${key} must be defined as static`)
 
 export const isHandledAssignment = (path, { left, right, property }) => {

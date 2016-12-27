@@ -4,10 +4,6 @@ const findVariableDeclarator = path => path.findParent(parentPath => parentPath.
 
 const getName = ({ node: { id: { name } } }) => name
 
-const getClassIdentifier = path => {
-
-}
-
 const getFunctionIdentifier = path => {
   if (t.isFunctionDeclaration(path)) return getName(path)
   if (t.isArrowFunctionExpression(path) || t.isFunctionExpression(path)) return getName(findVariableDeclarator(path))
@@ -16,7 +12,7 @@ const getFunctionIdentifier = path => {
 }
 
 const getIdentifier = path => {
-  if (t.isClass(path)) return getClassIdentifier(path)
+  if (t.isClass(path)) return getName(path)
   if (t.isFunction(path)) return getFunctionIdentifier(path)
 
   throw path.buildCodeFrameError('`path` must be Class or Function definition')

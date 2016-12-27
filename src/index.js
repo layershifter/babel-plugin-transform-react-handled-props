@@ -1,3 +1,4 @@
+import { entriesVisitor, importVisitor } from './visitors'
 import {
   isHandledAssignment,
   isHandledProperty,
@@ -6,89 +7,71 @@ import {
 } from './assertions'
 import { findClassIdentifier, generateExpression } from './helpers'
 import Store from './Store'
-import {
-  getIdentifier,
-  isReactClass,
-  isReactFunction,
-  isReactImport,
-} from './util'
+import { State } from './util'
 
 export default function ({ types: t }) {
   return {
     visitor: {
       Program(programPath) {
-        let hasImport = false
+        const state = new State()
         const store = new Store()
 
-        programPath.traverse({
-          ImportDeclaration(path) {
-            if (isReactImport(path)) {
-              hasImport = true
-              path.stop()
-            }
-          },
-        })
+        programPath.traverse(importVisitor, state)
 
-        if (!hasImport) return
+        if (state.hasImport) {
+          programPath.traverse(entriesVisitor, state)
+          programPath.traverse({
+            AssignmentExpression(path) {
+              const { left, right } = path.node
+              const { object, property } = left
 
-        programPath.traverse({
-          'Class|Function'(path) {
-            if (isReactClass(path)) console.log(getIdentifier(path))
-            if (isReactFunction(path)) console.log(getIdentifier(path))
-          },
-        })
+              if (isHandledAssignment(path, { left, right, property })) {
+                const { name: identifier } = object
+                const { elements } = right
 
-        programPath.traverse({
-          AssignmentExpression(path) {
-            const { left, right } = path.node
-            const { object, property } = left
+                elements.forEach(element => store.add(identifier, element.value))
+                path.remove()
 
-            if (isHandledAssignment(path, { left, right, property })) {
-              const { name: identifier } = object
-              const { elements } = right
+                return
+              }
 
-              elements.forEach(element => store.add(identifier, element.value))
-              path.remove()
+              if (isPropsAssignment(path, { left, right, property })) {
+                const { name: identifier } = object
+                const { properties } = right
 
-              return
-            }
+                properties.forEach(item => store.add(identifier, item.key.name))
+              }
+            },
+            ClassProperty(path) {
+              const { key, value } = path.node
 
-            if (isPropsAssignment(path, { left, right, property })) {
-              const { name: identifier } = object
-              const { properties } = right
+              if (isHandledProperty(path, { key, value })) {
+                const { elements } = value
 
-              properties.forEach(item => store.add(identifier, item.key.name))
-            }
-          },
-          ClassProperty(path) {
-            const { key, value } = path.node
+                elements.forEach(element => store.add(findClassIdentifier(path), element.value))
+                path.remove()
 
-            if (isHandledProperty(path, { key, value })) {
-              const { elements } = value
+                return
+              }
 
-              elements.forEach(element => store.add(findClassIdentifier(path), element.value))
-              path.remove()
+              if (isPropsProperty(path, { key, value })) {
+                const { properties } = value
+                properties.forEach(property => store.add(findClassIdentifier(path), property.key.name))
+              }
+            },
+          })
 
-              return
-            }
+          programPath.traverse({
+            'ClassDeclaration|FunctionDeclaration'(path) {
+              const { name } = path.node.id
 
-            if (isPropsProperty(path, { key, value })) {
-              const { properties } = value
-              properties.forEach(property => store.add(findClassIdentifier(path), property.key.name))
-            }
-          },
-        })
+              if (!store.has(name)) return
+              if (t.isExportDeclaration(path.parentPath)) path = path.parentPath
 
-        programPath.traverse({
-          'ClassDeclaration|FunctionDeclaration'(path) {
-            const { name } = path.node.id
-
-            if (!store.has(name)) return
-            if (t.isExportDeclaration(path.parentPath)) path = path.parentPath
-
-            path.insertAfter(generateExpression(store, name))
-          },
-        })
+              path.insertAfter(generateExpression(store, name))
+            },
+          })
+        }
       },
     },
   }
