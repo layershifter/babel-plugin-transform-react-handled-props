@@ -7,7 +7,7 @@ const getRenderMethod = path => getBody(path).find(member => {
   return t.isClassMethod(member) && t.isIdentifier(member.key, { name: 'render' })
 })
 
-const hasSuperClass = ({superClass}) => !!superClass
+const hasSuperClass = ({ superClass }) => !!superClass
 
 const isClass = node => t.isClassDeclaration(node) || t.isClassExpression(node)
 
