@@ -1,14 +1,12 @@
 import * as t from 'babel-types'
 
-const insertAfterPath = (path, expression) => {
-  if (t.isExportDeclaration(path.parent)) {
-    const parent = path.findParent(parentPath => parentPath.isExportDeclaration())
+const findTarget = path => {
+  if (t.isExportDeclaration(path.parent)) return path.findParent(parentPath => parentPath.isExportDeclaration())
+  if (t.isExpression(path)) return path.findParent(parentPath => parentPath.isDeclaration())
 
-    parent.insertAfter(expression)
-    return
-  }
-
-  path.insertAfter(expression)
+  return path
 }
+
+const insertAfterPath = (path, expression) => findTarget(path).insertAfter(expression)
 
 export default insertAfterPath

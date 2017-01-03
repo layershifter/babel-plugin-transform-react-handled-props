@@ -1,10 +1,9 @@
 import React, { PropTypes } from 'react';
 
-const Example = (_temp = () => {
-  var _temp;
-
+const Example = () => {
   return null;
-}, Example.handledProps = ['active', 'children', 'className'], _temp);
+};
+Example.handledProps = ['active', 'children', 'className'];
 Example.defaultProps = {
   active: true
 };
