@@ -1,7 +1,7 @@
 import * as t from 'babel-types'
 
-import hasReturnStatement from './hasReturnStatement'
 import getBody from './getBody'
+import hasReturnStatement from './hasReturnStatement'
 
 const isFunction = path => {
   return t.isArrowFunctionExpression(path) || t.isFunctionDeclaration(path) || t.isFunctionExpression(path)

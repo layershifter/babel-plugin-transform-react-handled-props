@@ -1,14 +1,20 @@
-export { default as getClassDeclaration } from './getClassDeclaration'
-export { default as getIdentifier } from './getIdentifier'
+export { default as createPropertyExpression } from './createPropertyExpression'
+export { default as insertAfterPath } from './insertAfterPath'
 
-export { default as isArrayValue } from './isArrayValue'
-export { default as isValidIdentifier } from './isValidIdentifier'
-export { default as isObjectValue } from './isObjectValue'
+export { default as getClassDeclaration } from './getClassDeclaration'
+export { default as getExpressionIdentifier } from './getExpressionIdentifier'
+export { default as getEntryIdentifier } from './getEntryIdentifier'
 
 export { default as isReactClass } from './isReactClass'
 export { default as isReactFunction } from './isReactFunction'
 export { default as isReactImport } from './isReactImport'
 
-export { default as isStaticProperty } from './isStaticProperty'
+export { default as isValidExpression } from './isValidExpression'
+export { default as isValidProperty } from './isValidProperty'
 
-export { default as State } from './State'
+export { default as Store } from './Store'
+export {
+  isArrayValue,
+  isObjectValue,
+  isStaticProperty,
+} from './types'

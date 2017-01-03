@@ -1,7 +1,5 @@
-const getClassDeclaration = path => {
-  const declaration = path.findParent(parentPath => parentPath.isClassDeclaration())
+import * as t from 'babel-types'
 
-  return declaration.node.id.name
-}
+const getClassDeclaration = path => path.findParent(parentPath => t.isClassDeclaration(parentPath))
 
 export default getClassDeclaration

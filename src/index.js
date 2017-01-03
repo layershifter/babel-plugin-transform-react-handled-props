@@ -3,33 +3,34 @@ import {
   importVisitor,
   propVisitor,
 } from './visitors'
-import { generateExpression } from './helpers'
-import { State } from './util'
+import {
+  createPropertyExpression,
+  insertAfterPath,
+  Store,
+} from './util'
 
-export default function ({ types: t }) {
+const insertEntries = entries => entries.forEach(({ identifier, path, props }) => {
+  insertAfterPath(path, createPropertyExpression(identifier, props))
+})
+
+const plugin = () => {
   return {
+    pre() {
+      this.store = new Store()
+    },
     visitor: {
       Program(programPath) {
-        const state = new State()
+        programPath.traverse(importVisitor, this.store)
 
-        programPath.traverse(importVisitor, state)
+        if (!this.store.hasImport) return
 
-        if (state.hasImport) {
-          programPath.traverse(entryVisitor, state)
-          programPath.traverse(propVisitor, state)
+        programPath.traverse(entryVisitor, this.store)
+        programPath.traverse(propVisitor, this.store)
 
-          programPath.traverse({
-            'ClassDeclaration|FunctionDeclaration'(path) {
-              const { name } = path.node.id
-
-              if (!store.has(name)) return
-              if (t.isExportDeclaration(path.parentPath)) path = path.parentPath
-
-              path.insertAfter(generateExpression(store, name))
-            },
-          })
-        }
+        insertEntries(this.store.getEntries())
       },
     },
   }
 }
+
+export default plugin

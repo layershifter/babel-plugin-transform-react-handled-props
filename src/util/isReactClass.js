@@ -7,14 +7,14 @@ const getRenderMethod = path => getBody(path).find(member => {
   return t.isClassMethod(member) && t.isIdentifier(member.key, { name: 'render' })
 })
 
-const hasSuperClass = ({ superClass }) => !!superClass
+const hasSuperClass = ({ node: { superClass } }) => !!superClass
 
-const isClass = node => t.isClassDeclaration(node) || t.isClassExpression(node)
+const hasValidRenderMethod = renderMethod => !!renderMethod && hasReturnStatement(renderMethod)
+
+const isClass = path => t.isClassDeclaration(path) || t.isClassExpression(path)
 
 const isReactClass = path => {
-  const renderMethod = getRenderMethod(path)
-
-  return isClass(path) && hasSuperClass(path) && !!renderMethod && hasReturnStatement(renderMethod)
+  return isClass(path) && hasSuperClass(path) && hasValidRenderMethod(getRenderMethod(path))
 }
 
 export default isReactClass

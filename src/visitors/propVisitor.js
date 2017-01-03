@@ -1,11 +1,13 @@
 import _ from 'lodash'
 import {
   getClassDeclaration,
-  getIdentifier,
+  getEntryIdentifier,
+  getExpressionIdentifier,
   isArrayValue,
   isObjectValue,
   isStaticProperty,
-  isValidIdentifier,
+  isValidExpression,
+  isValidProperty,
 } from '../util'
 
 const getArrayItems = ({ elements }) => _.map(elements, ({ value }) => value)
@@ -13,42 +15,38 @@ const getArrayItems = ({ elements }) => _.map(elements, ({ value }) => value)
 const getObjectKeys = ({ properties }) => _.map(properties, ({ key: { name } }) => name)
 
 const propVisitor = {
-  AssignmentExpression(path) {
-    const { left, right } = path.node
-    const { object, property } = left
+  AssignmentExpression(path, state) {
+    const identifier = getExpressionIdentifier(path)
+    const { node: { right } } = path
 
-    if (isHandledAssignment(path, { left, right, property })) {
-      const { name: identifier } = object
-      const { elements } = right
+    if (!state.hasEntry(identifier)) return
 
-      elements.forEach(element => store.add(identifier, element.value))
+    if (isValidExpression(path, ['handledProps']) && isArrayValue(right)) {
+      state.addProps(identifier, getArrayItems(right))
       path.remove()
 
       return
     }
 
-    if (isPropsAssignment(path, { left, right, property })) {
-      const { name: identifier } = object
-      const { properties } = right
-
-      properties.forEach(item => store.add(identifier, item.key.name))
+    if (isValidExpression(path, ['defaultProps', 'propTypes']) && isObjectValue(right)) {
+      state.addProps(identifier, getObjectKeys(right))
     }
   },
   ClassProperty(path, state) {
-    const identifier = getIdentifier(getClassDeclaration(path))
+    const identifier = getEntryIdentifier(getClassDeclaration(path))
     const { node: { value } } = path
 
-    if (!state.has(identifier) || !isStaticProperty(path)) return
+    if (!state.hasEntry(identifier) || !isStaticProperty(path)) return
 
-    if (isValidIdentifier(path, ['handleProps']) && isArrayValue(value)) {
-      state.add(identifier, getArrayItems(value))
+    if (isValidProperty(path, ['handledProps']) && isArrayValue(value)) {
+      state.addProps(identifier, getArrayItems(value))
       path.remove()
 
       return
     }
 
-    if (isValidIdentifier(path, ['defaultProps', 'propTypes']) && isObjectValue(value)) {
-      state.add(identifier, getObjectKeys(value))
+    if (isValidProperty(path, ['defaultProps', 'propTypes']) && isObjectValue(value)) {
+      state.addProps(identifier, getObjectKeys(value))
     }
   },
 }
