@@ -1,68 +1,36 @@
 import {
-  isHandledAssignment,
-  isHandledProperty,
-  isPropsAssignment,
-  isPropsProperty,
-} from './assertions'
-import { findClassIdentifier, generateExpression } from './helpers'
-import Store from './Store'
+  entryVisitor,
+  importVisitor,
+  propVisitor,
+} from './visitors'
+import {
+  createPropertyExpression,
+  insertAfterPath,
+  Store,
+} from './util'
 
-export default function ({ types: t }) {
+const insertEntries = entries => entries.forEach(({ identifier, path, props }) => {
+  insertAfterPath(path, createPropertyExpression(identifier, props))
+})
+
+const plugin = () => {
   return {
+    pre() {
+      this.store = new Store()
+    },
     visitor: {
       Program(programPath) {
-        const store = new Store()
+        programPath.traverse(importVisitor, this.store)
 
-        programPath.traverse({
-          AssignmentExpression(path) {
-            const { left, right } = path.node
-            const { object, property } = left
-            const { name: identifier } = object
+        if (!this.store.hasImport) return
 
-            if (isHandledAssignment(left, right, property)) {
-              const { elements } = right
+        programPath.traverse(entryVisitor, this.store)
+        programPath.traverse(propVisitor, this.store)
 
-              elements.forEach(element => store.add(identifier, element.value))
-              path.remove()
-
-              return
-            }
-
-            if (isPropsAssignment(left, right, property)) {
-              const { properties } = right
-              properties.forEach(item => store.add(identifier, item.key.name))
-            }
-          },
-          ClassProperty(path) {
-            const { key, value } = path.node
-
-            if (isHandledProperty(key, value, path.node.static)) {
-              const { elements } = value
-
-              elements.forEach(element => store.add(findClassIdentifier(path), element.value))
-              path.remove()
-
-              return
-            }
-
-            if (isPropsProperty(key, value, path.node.static)) {
-              const { properties } = value
-              properties.forEach(property => store.add(findClassIdentifier(path), property.key.name))
-            }
-          },
-        })
-
-        programPath.traverse({
-          'ClassDeclaration|FunctionDeclaration'(path) {
-            const { name } = path.node.id
-
-            if (!store.has(name)) return
-            if (t.isExportDeclaration(path.parentPath)) path = path.parentPath
-
-            path.insertAfter(generateExpression(store, name))
-          },
-        })
+        insertEntries(this.store.getEntries())
       },
     },
   }
 }
+
+export default plugin
