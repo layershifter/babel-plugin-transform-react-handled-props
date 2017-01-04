@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 
 export function First() {
-  return null;
+  return <div />;
 }
 
 export function Second() {
-  return null;
+  return <div />;
 }
 
 First.propTypes = {

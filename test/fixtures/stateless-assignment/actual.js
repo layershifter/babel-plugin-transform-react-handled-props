@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
 const Example = function () {
-  return null;
+  return <div />;
 };
 Example.defaultProps = {
   active: true
