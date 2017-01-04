@@ -9,12 +9,13 @@ export { default as isReactClass } from './isReactClass'
 export { default as isReactFunction } from './isReactFunction'
 export { default as isReactImport } from './isReactImport'
 
-export { default as isValidExpression } from './isValidExpression'
-export { default as isValidProperty } from './isValidProperty'
-
 export { default as Store } from './Store'
+
 export {
   isArrayValue,
+  isObjectExpression,
   isObjectValue,
   isStaticProperty,
+  isValidExpression,
+  isValidProperty,
 } from './types'
