@@ -11,8 +11,14 @@ const createPropertyExpression = (identifier, props) => {
 }
 
 const findTarget = path => {
-  if (t.isExportDeclaration(path.parent)) return path.findParent(parentPath => parentPath.isExportDeclaration())
-  if (t.isExpression(path)) return path.findParent(parentPath => parentPath.isDeclaration())
+  if (t.isArrowFunctionExpression(path) || t.isFunctionExpression(path)) {
+    const declarationPath = path.findParent(parentPath => t.isVariableDeclaration(parentPath))
+
+    return findTarget(declarationPath)
+  }
+
+  if (t.isExportDeclaration(path.parent)) return path.findParent(parentPath => t.isExportDeclaration(parentPath))
+  if (t.isExpression(path)) return path.findParent(parentPath => t.isDeclaration(parentPath))
 
   return path
 }
