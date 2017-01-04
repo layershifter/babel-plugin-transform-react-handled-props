@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
 function Example() {
-  return null;
+  return React.createElement('div', null);
 }
 Example.handledProps = ['active', 'children', 'className'];
 Example.defaultProps = {

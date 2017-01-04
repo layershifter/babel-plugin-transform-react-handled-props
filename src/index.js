@@ -3,15 +3,7 @@ import {
   importVisitor,
   propVisitor,
 } from './visitors'
-import {
-  createPropertyExpression,
-  insertAfterPath,
-  Store,
-} from './util'
-
-const insertEntries = entries => entries.forEach(({ identifier, path, props }) => {
-  insertAfterPath(path, createPropertyExpression(identifier, props))
-})
+import { appendProps, Store } from './util'
 
 const plugin = () => {
   return {
@@ -27,7 +19,7 @@ const plugin = () => {
         programPath.traverse(entryVisitor, this.store)
         programPath.traverse(propVisitor, this.store)
 
-        insertEntries(this.store.getEntries())
+        appendProps(this.store.getEntries())
       },
     },
   }

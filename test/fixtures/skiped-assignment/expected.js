@@ -7,5 +7,4 @@ function Example() {
   return null;
 }
 
-Example.handledProps = [];
 export default Example;
