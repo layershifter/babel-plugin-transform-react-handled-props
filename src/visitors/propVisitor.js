@@ -33,7 +33,10 @@ const propVisitor = {
     }
   },
   ClassProperty(path, state) {
-    const identifier = getEntryIdentifier(getClassDeclaration(path))
+    const declaration = getClassDeclaration(path)
+    if (!declaration) return
+
+    const identifier = getEntryIdentifier(declaration)
     const { node: { value } } = path
 
     if (!state.hasEntry(identifier) || !isStaticProperty(path)) return
