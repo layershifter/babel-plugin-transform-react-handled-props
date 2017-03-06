@@ -3,6 +3,8 @@ import _ from 'lodash'
 
 export const isArrayValue = path => t.isArrayExpression(path)
 
+export const isObjectProperty = path => t.isObjectProperty(path)
+
 export const isObjectValue = path => t.isObjectExpression(path)
 
 export const isStaticProperty = ({ node }) => !!node.static
