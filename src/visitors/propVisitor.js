@@ -4,6 +4,7 @@ import {
   getEntryIdentifier,
   getExpressionIdentifier,
   isArrayValue,
+  isObjectProperty,
   isObjectValue,
   isStaticProperty,
   isValidExpression,
@@ -12,7 +13,11 @@ import {
 
 const getArrayItems = ({ elements }) => _.map(elements, ({ value }) => value)
 
-const getObjectKeys = ({ properties }) => _.map(properties, ({ key: { name } }) => name)
+const getObjectKeys = ({ properties }) => {
+  const objectProperties = _.filter(properties, isObjectProperty)
+
+  return _.map(objectProperties, ({ key: { name } = {} }) => name)
+}
 
 const propVisitor = {
   AssignmentExpression(path, state) {

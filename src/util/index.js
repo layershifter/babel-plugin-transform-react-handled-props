@@ -11,6 +11,7 @@ export { default as Store } from './Store'
 
 export {
   isArrayValue,
+  isObjectProperty,
   isObjectValue,
   isStaticProperty,
   isValidExpression,
