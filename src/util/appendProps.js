@@ -1,14 +1,7 @@
-import _ from 'lodash'
 import * as t from 'babel-types'
 
-const createPropertyExpression = (identifier, props) => {
-  const entries = _.uniq(props).sort().map(prop => t.stringLiteral(prop))
-
-  const left = t.memberExpression(t.identifier(identifier), t.identifier('handledProps'))
-  const right = t.arrayExpression(entries)
-
-  return t.expressionStatement(t.assignmentExpression('=', left, right))
-}
+import { createFunctionProperty, createClassProperty } from './createExpressions'
+import { isClass } from './isReactComponent'
 
 const findTarget = path => {
   if (t.isArrowFunctionExpression(path) || t.isFunctionExpression(path)) {
@@ -23,20 +16,16 @@ const findTarget = path => {
   return path
 }
 
-const insertAfterPath = (path, identifier, props) => {
-  if(t.isClassDeclaration(path)) {
-    const entries = _.uniq(props).sort().map(prop => t.stringLiteral(prop))
-    const key = t.identifier('handledProps')
-    const value = t.arrayExpression(entries)
-    const prop = t.classProperty(key, value)
-    prop.static = true;
+const pushToClassBody = ({ node: { body: { body } } }, expression) => body.push(expression)
 
-    path.node.body.body.push(prop)
+const insertAfterPath = (path, identifier, props) => {
+  if (isClass(path)) {
+    pushToClassBody(path, createClassProperty(identifier, props))
 
     return
   }
 
-  return findTarget(path).insertAfter(createPropertyExpression(identifier, props))
+  findTarget(path).insertAfter(createFunctionProperty(identifier, props))
 }
 
 const insertEntries = entries => entries.forEach(({ identifier, path, props }) => {
