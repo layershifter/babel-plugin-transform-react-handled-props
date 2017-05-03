@@ -23,10 +23,24 @@ const findTarget = path => {
   return path
 }
 
-const insertAfterPath = (path, expression) => findTarget(path).insertAfter(expression)
+const insertAfterPath = (path, identifier, props) => {
+  if(t.isClassDeclaration(path)) {
+    const entries = _.uniq(props).sort().map(prop => t.stringLiteral(prop))
+    const key = t.identifier('handledProps')
+    const value = t.arrayExpression(entries)
+    const prop = t.classProperty(key, value)
+    prop.static = true;
+
+    path.node.body.body.push(prop)
+
+    return
+  }
+
+  return findTarget(path).insertAfter(createPropertyExpression(identifier, props))
+}
 
 const insertEntries = entries => entries.forEach(({ identifier, path, props }) => {
-  insertAfterPath(path, createPropertyExpression(identifier, props))
+  insertAfterPath(path, identifier, props)
 })
 
 export default insertEntries
