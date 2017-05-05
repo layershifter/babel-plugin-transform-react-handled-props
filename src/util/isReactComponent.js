@@ -20,7 +20,7 @@ const hasRenderMethod = ({ node: { body: { body } } }) => body.some(member => {
 
 const hasSuperClass = ({ node: { superClass } }) => !!superClass
 
-const isClass = path => t.isClassDeclaration(path) || t.isClassExpression(path)
+export const isClass = path => t.isClassDeclaration(path) || t.isClassExpression(path)
 
 const isFunction = path => {
   if (t.isFunctionDeclaration(path)) return true

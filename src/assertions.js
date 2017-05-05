@@ -7,7 +7,6 @@ export const isHandledAssignment = (path, { left, right, property }) => {
   return true
 }
 
-
 export const isPropsAssignment = (path, { left, right, property }) => {
   if (!t.isMemberExpression(left)) return false
   if (!t.isIdentifier(property, { name: 'defaultProps' }) && !t.isIdentifier(property, { name: 'propTypes' })) {
