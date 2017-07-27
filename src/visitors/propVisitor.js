@@ -22,10 +22,9 @@ const getObjectKeys = ({ properties }) => {
 const propVisitor = {
   AssignmentExpression(path, state) {
     const identifier = getExpressionIdentifier(path)
-    const { node: { right } } = path
+    const right = _.get(path, 'node.right')
 
     if (!state.hasEntry(identifier)) return
-
     if (isValidExpression(path, ['handledProps']) && isArrayValue(right)) {
       state.addProps(identifier, getArrayItems(right))
       path.remove()
@@ -38,11 +37,9 @@ const propVisitor = {
     }
   },
   ClassProperty(path, state) {
-    const declaration = getClassDeclaration(path)
-    if (!declaration) return
-
-    const identifier = getEntryIdentifier(declaration)
-    const { node: { value } } = path
+    const expression = getClassDeclaration(path)
+    const identifier = getEntryIdentifier(expression)
+    const value = _.get(path, 'node.value')
 
     if (!state.hasEntry(identifier) || !isStaticProperty(path)) return
 
