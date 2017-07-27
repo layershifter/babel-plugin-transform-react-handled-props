@@ -1,5 +1,5 @@
 import assert from 'assert'
-import { transformFileSync } from 'babel-core'
+import { transformFileSync } from 'babel-core' // eslint-disable-line import/no-extraneous-dependencies
 import fs from 'fs'
 import { trim, startCase } from 'lodash'
 import path from 'path'
@@ -17,7 +17,7 @@ const fixtureAssert = (fixtureDir, assertName) => it(`should pass ${assertName}`
 })
 
 describe('fixtures', () => {
-  fs.readdirSync(fixturesDir).forEach(caseName => {
+  fs.readdirSync(fixturesDir).forEach((caseName) => {
     const fixtureDir = path.join(fixturesDir, caseName)
     const assertName = startCase(caseName)
 

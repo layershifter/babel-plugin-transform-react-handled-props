@@ -3,7 +3,7 @@ import * as t from 'babel-types'
 import { createFunctionProperty, createClassProperty } from './createExpressions'
 import { isClass } from './isReactComponent'
 
-const findTarget = path => {
+const findTarget = (path) => {
   if (t.isArrowFunctionExpression(path) || t.isFunctionExpression(path)) {
     const declarationPath = path.findParent(parentPath => t.isVariableDeclaration(parentPath))
 

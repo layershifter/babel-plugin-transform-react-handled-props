@@ -1,6 +1,7 @@
 import * as t from 'babel-types'
+import _ from 'lodash'
 
-const containsJSX = path => {
+const containsJSX = (path) => {
   if (t.isJSXElement(path)) return true
   let containJSX
 
@@ -14,15 +15,15 @@ const containsJSX = path => {
   return containJSX
 }
 
-const hasRenderMethod = ({ node: { body: { body } } }) => body.some(member => {
-  return t.isClassMethod(member) && t.isIdentifier(member.key, { name: 'render' })
-})
+const isRenderMethod = member => t.isClassMethod(member) && t.isIdentifier(member.key, { name: 'render' })
+
+const hasRenderMethod = path => _.get(path, 'node.body.body').some(isRenderMethod)
 
 const hasSuperClass = ({ node: { superClass } }) => !!superClass
 
 export const isClass = path => t.isClassDeclaration(path) || t.isClassExpression(path)
 
-const isFunction = path => {
+const isFunction = (path) => {
   if (t.isFunctionDeclaration(path)) return true
   if (!t.isArrowFunctionExpression(path) && !t.isFunctionExpression(path)) return false
 

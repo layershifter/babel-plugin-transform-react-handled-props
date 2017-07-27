@@ -1,6 +1,10 @@
 {
+  "parser": "babel-eslint",
   "extends": [
-    "ta",
-    "ta/frontend"
-  ]
+    "airbnb-base"
+  ],
+  "rules": {
+    "max-len": [2, 120],
+    "semi": [2, "never"]
+  }
 }
