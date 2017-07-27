@@ -1,4 +1,5 @@
 import * as t from 'babel-types'
+import _ from 'lodash'
 
 import { createFunctionProperty, createClassProperty } from './createExpressions'
 import { isClass } from './isReactComponent'
@@ -18,18 +19,15 @@ const findTarget = path => {
 
 const pushToClassBody = ({ node: { body: { body } } }, expression) => body.push(expression)
 
-const insertAfterPath = (path, identifier, props) => {
+const insertAfterPath = ({ identifier, path, props }) => {
   if (isClass(path)) {
-    pushToClassBody(path, createClassProperty(identifier, props))
-
+    pushToClassBody(path, createClassProperty(props))
     return
   }
 
   findTarget(path).insertAfter(createFunctionProperty(identifier, props))
 }
 
-const insertEntries = entries => entries.forEach(({ identifier, path, props }) => {
-  insertAfterPath(path, identifier, props)
-})
+const insertEntries = entries => _.forEach(entries, insertAfterPath)
 
 export default insertEntries

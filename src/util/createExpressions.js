@@ -1,5 +1,5 @@
-import _ from 'lodash'
 import * as t from 'babel-types'
+import _ from 'lodash'
 
 const createEntriesArray = props => {
   const entries = _.uniq(props).sort().map(prop => t.stringLiteral(prop))
@@ -14,7 +14,7 @@ export const createFunctionProperty = (identifier, props) => {
   return t.expressionStatement(t.assignmentExpression('=', left, right))
 }
 
-export const createClassProperty = (identifier, props) => {
+export const createClassProperty = (props) => {
   const key = t.identifier('handledProps')
   const value = createEntriesArray(props)
   const property = t.classProperty(key, value)
