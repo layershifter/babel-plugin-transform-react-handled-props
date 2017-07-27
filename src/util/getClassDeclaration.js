@@ -1,7 +1,7 @@
 import * as t from 'babel-types'
 
-const getClassDeclaration = path => path.findParent(parentPath => {
-  return t.isClassDeclaration(parentPath) || t.isClassExpression(parentPath)
-})
+const isClassDeclaration = path => t.isClassDeclaration(path) || t.isClassExpression(path)
+
+const getClassDeclaration = path => path.findParent(isClassDeclaration)
 
 export default getClassDeclaration

@@ -1,7 +1,7 @@
 import * as t from 'babel-types'
 import _ from 'lodash'
 
-const createEntriesArray = props => {
+const createEntriesArray = (props) => {
   const entries = _.uniq(props).sort().map(prop => t.stringLiteral(prop))
 
   return t.arrayExpression(entries)

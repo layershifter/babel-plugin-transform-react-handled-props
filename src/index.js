@@ -5,24 +5,22 @@ import {
 } from './visitors'
 import { appendProps, Store } from './util'
 
-const plugin = () => {
-  return {
-    pre() {
-      this.store = new Store()
+const plugin = () => ({
+  pre() {
+    this.store = new Store()
+  },
+  visitor: {
+    Program(programPath) {
+      programPath.traverse(importVisitor, this.store)
+
+      if (!this.store.hasImport) return
+
+      programPath.traverse(entryVisitor, this.store)
+      programPath.traverse(propVisitor, this.store)
+
+      appendProps(this.store.getEntries())
     },
-    visitor: {
-      Program(programPath) {
-        programPath.traverse(importVisitor, this.store)
-
-        if (!this.store.hasImport) return
-
-        programPath.traverse(entryVisitor, this.store)
-        programPath.traverse(propVisitor, this.store)
-
-        appendProps(this.store.getEntries())
-      },
-    },
-  }
-}
+  },
+})
 
 export default plugin
