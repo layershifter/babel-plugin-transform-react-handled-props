@@ -32,8 +32,8 @@
     "release:major": "npm run prerelease && ta-script npm/release.sh major",
     "release:minor": "npm run prerelease && ta-script npm/release.sh minor",
     "release:patch": "npm run prerelease && ta-script npm/release.sh patch",
-    "test": "mocha --compilers js:babel-register",
-    "test:watch": "npm run test -- --watch",
+    "test": "mocha --require babel-register \"test/*.js\"",
+    "test:watch": "npm run test -- --watch --watch-extensions js",
     "prerelease": "npm run clean && npm run build"
   },
   "keywords": [
