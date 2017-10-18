@@ -4,14 +4,15 @@ import _ from 'lodash'
 import { createFunctionProperty, createClassProperty } from './createExpressions'
 import { isClass } from './isReactComponent'
 
-const findTarget = (path) => {
+const findTarget = path => {
   if (t.isArrowFunctionExpression(path) || t.isFunctionExpression(path)) {
     const declarationPath = path.findParent(parentPath => t.isVariableDeclaration(parentPath))
 
     return findTarget(declarationPath)
   }
 
-  if (t.isExportDeclaration(path.parent)) return path.findParent(parentPath => t.isExportDeclaration(parentPath))
+  if (t.isExportDeclaration(path.parent))
+    return path.findParent(parentPath => t.isExportDeclaration(parentPath))
   if (t.isExpression(path)) return path.findParent(parentPath => t.isDeclaration(parentPath))
 
   return path

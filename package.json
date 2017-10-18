@@ -8,19 +8,20 @@
     "src"
   ],
   "dependencies": {
+    "babel-preset-env": "^1.6.1",
     "babel-types": "^6.26.0",
     "lodash": "^4.17.4"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.0.0",
-    "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "eslint": "^4.6.1",
-    "eslint-config-airbnb-base": "^12.0.0",
-    "eslint-plugin-import": "^2.7.0",
+    "eslint-config-prettier": "^2.6.0",
+    "eslint-plugin-prettier": "^2.3.1",
     "mocha": "^4.0.0",
+    "prettier": "^1.7.4",
     "rimraf": "^2.6.2",
     "ta-scripts": "^2.5.2"
   },
@@ -29,12 +30,14 @@
     "build": "babel src -d lib",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
+    "prerelease": "npm run clean && npm run build",
     "release:major": "npm run prerelease && ta-script npm/release.sh major",
     "release:minor": "npm run prerelease && ta-script npm/release.sh minor",
     "release:patch": "npm run prerelease && ta-script npm/release.sh patch",
+    "lint": "prettier --list-different \"src/**/*.js\" \"test/test.js\" && eslint \"src/**/*.js\" \"test/test.js\"",
+    "lint:fix": "prettier --write \"src/**/*.js\" \"test/test.js\" && eslint --fix \"src/**/*.js\" \"test/test.js\"",
     "test": "mocha --require babel-register \"test/*.js\"",
-    "test:watch": "npm run test -- --watch --watch-extensions js",
-    "prerelease": "npm run clean && npm run build"
+    "test:watch": "npm run test -- --watch --watch-extensions js"
   },
   "keywords": [
     "babel",

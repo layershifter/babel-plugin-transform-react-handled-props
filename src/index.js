@@ -1,8 +1,4 @@
-import {
-  entryVisitor,
-  importVisitor,
-  propVisitor,
-} from './visitors'
+import { entryVisitor, importVisitor, propVisitor } from './visitors'
 import { appendProps, Store } from './util'
 
 const plugin = () => ({
