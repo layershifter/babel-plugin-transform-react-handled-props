@@ -12,7 +12,8 @@ export default class Store {
     this.entries[name] = { path, props: [] }
   }
 
-  getEntries = () => _.map(this.entries, ({ path, props }, identifier) => ({ identifier, path, props }))
+  getEntries = () =>
+    _.map(this.entries, ({ path, props }, identifier) => ({ identifier, path, props }))
 
   hasEntry = name => _.has(this.entries, name)
 }
