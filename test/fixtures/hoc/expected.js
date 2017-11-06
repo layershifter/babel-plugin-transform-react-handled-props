@@ -1,17 +1,18 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 export default function Foo() {
   return function Bar(Component) {
-    var _class, _temp;
-
-    return _temp = _class = class Baz extends React.Component {
+    return class Baz extends React.Component {
+      static propTypes = {
+        children: PropTypes.node
+      };
 
       render() {
-        return React.createElement(Component, null);
+        return <Component />;
       }
-    }, _class.propTypes = {
-      children: PropTypes.node
-    }, _class.handledProps = ['children'], _temp;
+      static handledProps = ['children'];
+    };
   };
 }
 Foo.handledProps = [];

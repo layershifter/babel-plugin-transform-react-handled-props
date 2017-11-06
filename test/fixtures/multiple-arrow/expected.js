@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-export const First = () => React.createElement('div', null);
+export const First = () => <div />;
 First.handledProps = ['children'];
 First.propTypes = {
   children: PropTypes.node

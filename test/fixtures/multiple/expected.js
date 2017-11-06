@@ -1,12 +1,13 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 export function First() {
-  return React.createElement('div', null);
+  return <div />;
 }
 
 First.handledProps = ['children'];
 export function Second() {
-  return React.createElement('div', null);
+  return <div />;
 }
 
 Second.handledProps = ['children'];

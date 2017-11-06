@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 function Example() {
-  return React.createElement('div', null);
+  return <div />;
 }
 Example.handledProps = ['children', 'className'];
 
