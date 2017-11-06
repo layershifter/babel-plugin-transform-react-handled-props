@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-const Example = () => React.createElement('div', null);
+const Example = () => <div />;
 Example.handledProps = ['active', 'children', 'className'];
 Example.defaultProps = {
   active: true
