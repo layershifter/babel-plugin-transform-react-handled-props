@@ -4,8 +4,9 @@
       "targets": {
         "node": "4"
       }
-    }],
-    "react",
-    "stage-0"
+    }]
+  ],
+  "plugins": [
+    "babel-plugin-transform-class-properties"
   ]
 }
