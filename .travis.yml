@@ -5,7 +5,10 @@ cache:
 language: node_js
 
 node_js:
-  - v6
+  - "4"
+  - "6"
+  - "8"
+  - "9"
 
 script:
   - npm run lint
