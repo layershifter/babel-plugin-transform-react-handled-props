@@ -115,7 +115,7 @@ const Baz = (props) => (
   <div {...props} />
 )
 
-Baz.handledProps = ['className'];
+Baz.handledProps = ['className', 'children'];
 
 Baz.propTypes = {
   children: PropTypes.node,
@@ -147,6 +147,46 @@ $ babel --plugins transform-react-handled-props script.js
 require("babel-core").transform("code", {
   plugins: ["transform-react-handled-props"]
 });
+```
+
+## Options
+
+#### `ignoredProps`
+
+This options allows to ignore some props, this will allow to not add them to `handledProps`.
+
+```json
+{
+  "plugins": ["transform-react-handled-props", { "ignoredProps": ["children"] }]
+}
+```
+
+**In**
+
+```js
+const Baz = (props) => (
+  <div {...props} />
+)
+
+Baz.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+}
+```
+
+**Out**
+
+```js
+const Baz = (props) => (
+  <div {...props} />
+)
+
+Baz.handledProps = ['className'];
+
+Baz.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+}
 ```
 
 ## Is it safe?
