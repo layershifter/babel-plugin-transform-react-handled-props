@@ -1,27 +1,48 @@
 import assert from 'assert'
-import { transformFileSync } from 'babel-core' // eslint-disable-line import/no-extraneous-dependencies
+import { transformFileSync } from 'babel-core'
 import fs from 'fs'
-import { trim, startCase } from 'lodash'
+import _ from 'lodash'
 import path from 'path'
+
+import handledProps from '../src'
 
 const fixturesDir = path.join(__dirname, 'fixtures')
 
-const fixtureAssert = (fixtureDir, assertName) =>
-  it(`should pass ${assertName}`, () => {
-    const actualPath = path.join(fixtureDir, 'actual.js')
-    const expectedPath = path.join(fixtureDir, 'expected.js')
+const fixtureAssert = (fixtureDir, options = []) =>
+  it(`should pass ${_.startCase(fixtureDir)}`, () => {
+    const actualPath = path.join(fixturesDir, fixtureDir, 'actual.js')
+    const expectedPath = path.join(fixturesDir, fixtureDir, 'expected.js')
 
-    const actual = transformFileSync(actualPath).code
+    const actual = transformFileSync(actualPath, {
+      babelrc: false,
+      plugins: [[handledProps, options]],
+    }).code
     const expected = fs.readFileSync(expectedPath).toString()
 
-    assert.equal(trim(actual), trim(expected))
+    assert.equal(_.trim(actual), _.trim(expected))
   })
 
 describe('fixtures', () => {
-  fs.readdirSync(fixturesDir).forEach(caseName => {
-    const fixtureDir = path.join(fixturesDir, caseName)
-    const assertName = startCase(caseName)
+  fixtureAssert('hoc')
+  fixtureAssert('hoc-unnamed')
 
-    if (fs.lstatSync(fixtureDir).isDirectory()) fixtureAssert(fixtureDir, assertName)
-  })
+  fixtureAssert('ignored', { ignoredProps: ['as'] })
+
+  fixtureAssert('multiple')
+  fixtureAssert('multiple-arrow')
+
+  fixtureAssert('skipped')
+  fixtureAssert('skipped-arrow')
+  fixtureAssert('skipped-assignment')
+
+  fixtureAssert('spread')
+
+  fixtureAssert('statefull')
+  fixtureAssert('statefull-predefined')
+  fixtureAssert('statefull-static')
+
+  fixtureAssert('stateless')
+  fixtureAssert('stateless-arrow')
+  fixtureAssert('stateless-assignment')
+  fixtureAssert('stateless-predefined')
 })
