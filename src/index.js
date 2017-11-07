@@ -11,7 +11,7 @@ const plugin = () => ({
     this.store = new Store()
   },
   visitor: {
-    Program(programPath) {
+    Program(programPath, { opts }) {
       programPath.traverse(importVisitor, this.store)
 
       if (!this.store.hasImport) return
@@ -19,7 +19,7 @@ const plugin = () => ({
       programPath.traverse(entryVisitor, this.store)
       programPath.traverse(propVisitor, this.store)
 
-      appendProps(this.store.getEntries())
+      appendProps(this.store.getEntries(), opts)
     },
   },
 })

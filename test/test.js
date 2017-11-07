@@ -26,6 +26,8 @@ describe('fixtures', () => {
   fixtureAssert('hoc')
   fixtureAssert('hoc-unnamed')
 
+  fixtureAssert('ignored', { ignoredProps: ['as'] })
+
   fixtureAssert('multiple')
   fixtureAssert('multiple-arrow')
 
