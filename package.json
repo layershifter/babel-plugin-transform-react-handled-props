@@ -1,6 +1,6 @@
 {
-  "name": "babel-plugin-transform-react-handled-props",
-  "version": "0.3.0",
+  "name": "babel-plugin-transform-react-flow-handled-props",
+  "version": "0.1.4",
   "description": "Generates handledProps from defaultProps and propTypes during the build",
   "main": "lib/index.js",
   "files": [
@@ -49,9 +49,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+ssh://github.com/layershifter/babel-plugin-transform-react-handled-props.git"
+    "url": "git+ssh://github.com/simonguo/babel-plugin-transform-react-flow-handled-props.git"
   },
   "author": "Alexander Fedyashov <a@fedyashov.com>",
-  "homepage": "https://github.com/layershifter/babel-plugin-transform-react-handled-props",
+  "homepage": "https://github.com/simonguo/babel-plugin-transform-react-flow-handled-props",
   "license": "MIT"
 }

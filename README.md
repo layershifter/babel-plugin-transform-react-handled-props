@@ -1,15 +1,15 @@
-# babel-plugin-transform-react-handled-props
+# babel-plugin-transform-react-flow-handled-props
 
 Generates handledProps from defaultProps and propTypes during the build :sparkles:
 
-[![Build Status](https://travis-ci.org/layershifter/babel-plugin-transform-react-handled-props.svg?branch=master)](https://travis-ci.org/layershifter/babel-plugin-transform-react-handled-props)
-[![Gemnasium](https://img.shields.io/gemnasium/layershifter/babel-plugin-transform-react-handled-props.svg?style=flat)](https://gemnasium.com/layershifter/babel-plugin-transform-react-handled-props)
-[![npm](https://img.shields.io/npm/v/babel-plugin-transform-react-handled-props.svg?style=flat)](https://www.npmjs.com/package/babel-plugin-transform-react-handled-props)
+[![Build Status](https://travis-ci.org/simonguo/babel-plugin-transform-react-flow-handled-props.svg?branch=master)](https://travis-ci.org/layershifter/babel-plugin-transform-react-flow-handled-props)
+[![Gemnasium](https://img.shields.io/gemnasium/simonguo/babel-plugin-transform-react-flow-handled-props.svg?style=flat)](https://gemnasium.com/simonguo/babel-plugin-transform-react-flow-handled-props)
+[![npm](https://img.shields.io/npm/v/babel-plugin-transform-react-flow-handled-props.svg?style=flat)](https://www.npmjs.com/package/babel-plugin-transform-react-flow-handled-props)
 
 ## Installation
 
 ```sh
-$ npm install --save-dev babel-plugin-transform-react-handled-props
+$ npm install --save-dev babel-plugin-transform-react-flow-handled-props
 ```
 
 ## Story
@@ -95,6 +95,8 @@ class Foo extends React.Component {
 
 ## Example transform
 
+### PropTypes
+
 **In**
 
 ```js
@@ -123,6 +125,60 @@ Baz.propTypes = {
 }
 ```
 
+### Flow Props
+
+
+**In**
+
+```js
+// @flow
+
+import * as React from 'react';
+import PropTypes from 'prop-types';
+
+type Props = {
+  name?: string,
+  _text?: string,
+  'aria-describedby'?: string,
+  children?: React.Node
+}
+
+class Baz extends React.Component<Props> {
+
+  render() {
+    return <div {...this.props} />;
+  }
+}
+
+export default Baz;
+```
+
+**Out**
+
+```js
+// @flow
+
+import * as React from 'react';
+
+type Props = {
+  name?: string;
+  _text?: string;
+  'aria-describedby'?: string;
+  children?: React.Node;
+};
+
+class Baz extends React.Component<Props> {
+
+  render() {
+    return <div {...this.props} />;
+  }
+  static handledProps = ['_text', 'aria-describedby', 'children', 'name'];
+}
+
+export default Baz;
+```
+
+
 ## Usage
 
 ### Via `.babelrc` (Recommended)
@@ -131,21 +187,21 @@ Baz.propTypes = {
 
 ```json
 {
-  "plugins": ["transform-react-handled-props"]
+  "plugins": ["transform-react-flow-handled-props"]
 }
 ```
 
 ### Via CLI
 
 ```sh
-$ babel --plugins transform-react-handled-props script.js
+$ babel --plugins transform-react-flow-handled-props script.js
 ```
 
 ### Via Node API
 
 ```javascript
 require("babel-core").transform("code", {
-  plugins: ["transform-react-handled-props"]
+  plugins: ["transform-react-flow-handled-props"]
 });
 ```
 
@@ -157,7 +213,7 @@ This options allows to ignore some props, this will allow to not add them to `ha
 
 ```json
 {
-  "plugins": ["transform-react-handled-props", { "ignoredProps": ["children"] }]
+  "plugins": ["transform-react-flow-handled-props", { "ignoredProps": ["children"] }]
 }
 ```
 
