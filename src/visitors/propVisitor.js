@@ -19,7 +19,26 @@ const getObjectKeys = ({ properties }) => {
   return _.map(objectProperties, ({ key: { name } = {} }) => name)
 }
 
+const getFlowTypeKeys = path => {
+  const globals = Object.keys(_.get(path, 'scope.globals')) || []
+  return _.filter(globals, key => key !== 'Node')
+}
+
+const getTypeAliasIdentifier = path => {
+  const entries = _.get(path, 'state.entries')
+  if (!entries) {
+    return
+  }
+  return _.get(Object.keys(entries), '0')
+}
+
 const propVisitor = {
+  TypeAlias(path, state) {
+    const identifier = getTypeAliasIdentifier(path)
+    if (identifier) {
+      state.addProps(identifier, getFlowTypeKeys(path))
+    }
+  },
   AssignmentExpression(path, state) {
     const identifier = getExpressionIdentifier(path)
     const right = _.get(path, 'node.right')

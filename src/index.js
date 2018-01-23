@@ -6,6 +6,7 @@ const plugin = () => ({
     parserOptions.plugins.push('classProperties')
     parserOptions.plugins.push('jsx')
     parserOptions.plugins.push('objectRestSpread')
+    parserOptions.plugins.push('flow')
   },
   pre() {
     this.store = new Store()
