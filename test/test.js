@@ -45,4 +45,5 @@ describe('fixtures', () => {
   fixtureAssert('stateless-arrow')
   fixtureAssert('stateless-assignment')
   fixtureAssert('stateless-predefined')
+  fixtureAssert('flow')
 })
