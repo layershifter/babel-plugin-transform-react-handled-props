@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 type Props = {
   name?: string;
   _text?: string;
+  'aria-describedby'?: string;
   children?: React.Node;
 };
 
