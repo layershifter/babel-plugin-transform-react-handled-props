@@ -4,8 +4,9 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 
 type Props = {
-  name?:string,
-  qq?:string,
+  name?: string,
+  _text?: string,
+  'aria-describedby'?: string,
   children?: React.Node
 }
 

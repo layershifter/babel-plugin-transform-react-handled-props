@@ -20,16 +20,24 @@ const getObjectKeys = ({ properties }) => {
 }
 
 const getFlowTypeKeys = path => {
-  const globals = Object.keys(_.get(path, 'scope.globals')) || []
-  return _.filter(globals, key => key !== 'Node')
+  const properties = _.get(path, 'node.right.properties') || []
+  return properties.map(item => {
+    let type = _.get(item, 'key.type')
+    if (type === 'StringLiteral') {
+      return _.get(item, 'key.value')
+    } else if (type === 'Identifier') {
+      return _.get(item, 'key.name')
+    }
+    return
+  })
 }
 
 const getTypeAliasIdentifier = path => {
-  const entries = _.get(path, 'state.entries')
-  if (!entries) {
+  const body = _.get(path, 'parent.body') || []
+  if (!body) {
     return
   }
-  return _.get(Object.keys(entries), '0')
+  return _.get(body.find(item => item.type === 'ClassDeclaration'), 'id.name')
 }
 
 const propVisitor = {
