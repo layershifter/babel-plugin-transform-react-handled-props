@@ -19,7 +19,34 @@ const getObjectKeys = ({ properties }) => {
   return _.map(objectProperties, ({ key: { name } = {} }) => name)
 }
 
+const getFlowTypeKeys = path => {
+  const properties = _.get(path, 'node.right.properties') || []
+  return properties.map(item => {
+    let type = _.get(item, 'key.type')
+    if (type === 'StringLiteral') {
+      return _.get(item, 'key.value')
+    } else if (type === 'Identifier') {
+      return _.get(item, 'key.name')
+    }
+    return
+  })
+}
+
+const getTypeAliasIdentifier = path => {
+  const body = _.get(path, 'parent.body') || []
+  if (!body) {
+    return
+  }
+  return _.get(body.find(item => item.type === 'ClassDeclaration'), 'id.name')
+}
+
 const propVisitor = {
+  TypeAlias(path, state) {
+    const identifier = getTypeAliasIdentifier(path)
+    if (identifier) {
+      state.addProps(identifier, getFlowTypeKeys(path))
+    }
+  },
   AssignmentExpression(path, state) {
     const identifier = getExpressionIdentifier(path)
     const right = _.get(path, 'node.right')
