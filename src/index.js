@@ -4,9 +4,9 @@ import { appendProps, Store } from './util'
 const plugin = () => ({
   manipulateOptions: (opts, parserOptions) => {
     parserOptions.plugins.push('classProperties')
+    parserOptions.plugins.push('flow')
     parserOptions.plugins.push('jsx')
     parserOptions.plugins.push('objectRestSpread')
-    parserOptions.plugins.push('flow')
   },
   pre() {
     this.store = new Store()

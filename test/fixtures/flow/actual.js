@@ -1,20 +1,17 @@
 // @flow
-
-import * as React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 type Props = {
-  name?: string,
-  _text?: string,
-  'aria-describedby'?: string,
-  children?: React.Node
-}
+  name?: string;
+  _text?: string;
+  'aria-describedby'?: string;
+  children?: React.Node;
+};
 
-class Baz extends React.Component<Props> {
-
+class Foo extends Component<Props> {
   render() {
     return <div {...this.props} />;
   }
 }
 
-export default Baz;
+export default Foo;
