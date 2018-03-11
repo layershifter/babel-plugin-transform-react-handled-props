@@ -1,5 +1,19 @@
 # Change Log
 
+## [v0.3.1](https://github.com/layershifter/babel-plugin-transform-react-handled-props/tree/v0.3.1) (2018-03-11)
+[Full Changelog](https://github.com/layershifter/babel-plugin-transform-react-handled-props/compare/v0.3.0...v0.3.1)
+
+**Closed issues:**
+
+- An in-range update of eslint is breaking the build 🚨 [\#28](https://github.com/layershifter/babel-plugin-transform-react-handled-props/issues/28)
+- An in-range update of eslint is breaking the build 🚨 [\#26](https://github.com/layershifter/babel-plugin-transform-react-handled-props/issues/26)
+
+**Merged pull requests:**
+
+- fix\(plugin\): fix in processing string props [\#35](https://github.com/layershifter/babel-plugin-transform-react-handled-props/pull/35) ([layershifter](https://github.com/layershifter))
+- chore\(package\): update deps [\#34](https://github.com/layershifter/babel-plugin-transform-react-handled-props/pull/34) ([layershifter](https://github.com/layershifter))
+- chore\(package\): update deps [\#27](https://github.com/layershifter/babel-plugin-transform-react-handled-props/pull/27) ([layershifter](https://github.com/layershifter))
+
 ## [v0.3.0](https://github.com/layershifter/babel-plugin-transform-react-handled-props/tree/v0.3.0) (2017-11-07)
 [Full Changelog](https://github.com/layershifter/babel-plugin-transform-react-handled-props/compare/v0.2.4...v0.3.0)
 
