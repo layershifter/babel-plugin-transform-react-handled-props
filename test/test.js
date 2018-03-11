@@ -23,6 +23,8 @@ const fixtureAssert = (fixtureDir, options = []) =>
   })
 
 describe('fixtures', () => {
+  fixtureAssert('attr-string')
+
   fixtureAssert('hoc')
   fixtureAssert('hoc-unnamed')
 
