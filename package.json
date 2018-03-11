@@ -30,6 +30,7 @@
   "scripts": {
     "clean": "rimraf lib",
     "build": "babel src -d lib",
+    "build:changelog": "github_changelog_generator --max-issues 1000",
     "lint": "prettier --list-different \"src/**/*.js\" \"test/test.js\" && eslint \"src/**/*.js\" \"test/test.js\"",
     "lint:fix": "prettier --write \"src/**/*.js\" \"test/test.js\" && eslint --fix \"src/**/*.js\" \"test/test.js\"",
     "prerelease": "npm run clean && npm run build",
