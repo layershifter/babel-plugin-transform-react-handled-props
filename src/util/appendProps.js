@@ -18,7 +18,14 @@ const findTarget = path => {
   return path
 }
 
-const pushToClassBody = ({ node: { body: { body } } }, expression) => body.push(expression)
+const pushToClassBody = (
+  {
+    node: {
+      body: { body },
+    },
+  },
+  expression,
+) => body.push(expression)
 
 const insertAfterPath = ({ identifier, path, props }) => {
   if (isClass(path)) {

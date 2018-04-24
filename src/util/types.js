@@ -17,7 +17,9 @@ export const isValidExpression = ({ node: { left = {} } }, names) => {
 }
 
 export const isValidProperty = (path, names) => {
-  const { node: { key } } = path
+  const {
+    node: { key },
+  } = path
   const { name } = key
 
   return t.isIdentifier(key) && _.includes(names, name)
