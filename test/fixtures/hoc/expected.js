@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
 export default function Foo() {
   return function Bar(Component) {
     return class Baz extends React.Component {
@@ -11,7 +10,8 @@ export default function Foo() {
       render() {
         return <Component />;
       }
-      static handledProps = ['children'];
+
+      static handledProps = ["children"];
     };
   };
 }

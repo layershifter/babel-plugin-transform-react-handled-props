@@ -9,7 +9,7 @@ Generates handledProps from defaultProps and propTypes during the build :sparkle
 ## Installation
 
 ```sh
-$ npm install --save-dev babel-plugin-transform-react-handled-props
+$ yarn add --dev babel-plugin-transform-react-handled-props
 ```
 
 ## Story

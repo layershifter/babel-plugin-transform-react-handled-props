@@ -1,4 +1,4 @@
-import * as t from 'babel-types'
+import * as t from '@babel/types'
 import _ from 'lodash'
 
 const containsJSX = path => {

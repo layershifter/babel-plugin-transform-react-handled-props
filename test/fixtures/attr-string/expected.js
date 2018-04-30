@@ -5,10 +5,9 @@ function Example() {
   return <div />;
 }
 
-Example.handledProps = ['aria-label', 'children'];
+Example.handledProps = ["aria-label", "children"];
 Example.propTypes = {
   'aria-label': PropTypes.string,
   children: PropTypes.node
 };
-
 export default Example;

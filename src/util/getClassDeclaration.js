@@ -1,4 +1,4 @@
-import * as t from 'babel-types'
+import * as t from '@babel/types'
 
 const isClassDeclaration = path => t.isClassDeclaration(path) || t.isClassExpression(path)
 

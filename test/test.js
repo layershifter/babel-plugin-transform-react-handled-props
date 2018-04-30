@@ -1,5 +1,5 @@
 import assert from 'assert'
-import { transformFileSync } from 'babel-core'
+import { transformFileSync } from '@babel/core'
 import fs from 'fs'
 import _ from 'lodash'
 import path from 'path'
@@ -8,7 +8,7 @@ import handledProps from '../src'
 
 const fixturesDir = path.join(__dirname, 'fixtures')
 
-const fixtureAssert = (fixtureDir, options = []) =>
+const fixtureAssert = (fixtureDir, options = {}) =>
   it(`should pass ${_.startCase(fixtureDir)}`, () => {
     const actualPath = path.join(fixturesDir, fixtureDir, 'actual.js')
     const expectedPath = path.join(fixturesDir, fixtureDir, 'expected.js')

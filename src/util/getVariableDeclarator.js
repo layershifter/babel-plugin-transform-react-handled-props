@@ -1,4 +1,4 @@
-import * as t from 'babel-types'
+import * as t from '@babel/types'
 
 const getVariableDeclarator = path =>
   path.findParent(parentPath => t.isVariableDeclarator(parentPath))
