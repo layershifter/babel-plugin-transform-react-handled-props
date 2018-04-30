@@ -12,6 +12,8 @@ Generates handledProps from defaultProps and propTypes during the build :sparkle
 $ yarn add --dev babel-plugin-transform-react-handled-props
 ```
 
+*This plugin is for Babel 7. If you need to support Babel 6 use the  [babel6](https://github.com/layershifter/babel-plugin-transform-react-handled-props/tree/babel6) branch.*
+
 ## Story
 
 This plugin was originally created for [Semantic React](https://github.com/Semantic-Org/Semantic-UI-React) package.
