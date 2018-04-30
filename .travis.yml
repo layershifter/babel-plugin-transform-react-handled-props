@@ -10,7 +10,7 @@ node_js:
   - "10"
 
 script:
-  - yarn run lint
-  - yarn run test
+  - yarn lint
+  - yarn test
 
 sudo: required
