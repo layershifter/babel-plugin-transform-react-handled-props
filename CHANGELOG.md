@@ -1,5 +1,26 @@
 # Change Log
 
+## [v1.0.0](https://github.com/layershifter/babel-plugin-transform-react-handled-props/tree/v1.0.0) (2018-04-30)
+[Full Changelog](https://github.com/layershifter/babel-plugin-transform-react-handled-props/compare/v0.3.2...v1.0.0)
+
+**Merged pull requests:**
+
+- chore\(package\): update to Babel 7 [\#41](https://github.com/layershifter/babel-plugin-transform-react-handled-props/pull/41) ([layershifter](https://github.com/layershifter))
+
+## [v0.3.2](https://github.com/layershifter/babel-plugin-transform-react-handled-props/tree/v0.3.2) (2018-04-30)
+[Full Changelog](https://github.com/layershifter/babel-plugin-transform-react-handled-props/compare/v0.3.1...v0.3.2)
+
+**Closed issues:**
+
+- An in-range update of babel-eslint is breaking the build 🚨 [\#38](https://github.com/layershifter/babel-plugin-transform-react-handled-props/issues/38)
+- An in-range update of mocha is breaking the build 🚨 [\#37](https://github.com/layershifter/babel-plugin-transform-react-handled-props/issues/37)
+- An in-range update of prettier is breaking the build 🚨 [\#36](https://github.com/layershifter/babel-plugin-transform-react-handled-props/issues/36)
+
+**Merged pull requests:**
+
+- chore\(package\): update deps and add NodeJS 10 to build matrix [\#40](https://github.com/layershifter/babel-plugin-transform-react-handled-props/pull/40) ([layershifter](https://github.com/layershifter))
+- chore\(package\): update deps [\#39](https://github.com/layershifter/babel-plugin-transform-react-handled-props/pull/39) ([layershifter](https://github.com/layershifter))
+
 ## [v0.3.1](https://github.com/layershifter/babel-plugin-transform-react-handled-props/tree/v0.3.1) (2018-03-11)
 [Full Changelog](https://github.com/layershifter/babel-plugin-transform-react-handled-props/compare/v0.3.0...v0.3.1)
 
