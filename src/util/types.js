@@ -1,4 +1,4 @@
-import * as t from 'babel-types'
+import * as t from '@babel/types'
 import _ from 'lodash'
 
 export const isArrayValue = path => t.isArrayExpression(path)

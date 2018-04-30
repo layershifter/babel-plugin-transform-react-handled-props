@@ -1,6 +1,9 @@
 {
   "name": "babel-plugin-transform-react-handled-props",
   "version": "0.3.2",
+  "author": "Alexander Fedyashov <a@fedyashov.com>",
+  "homepage": "https://github.com/layershifter/babel-plugin-transform-react-handled-props",
+  "license": "MIT",
   "description": "Generates handledProps from defaultProps and propTypes during the build",
   "main": "lib/index.js",
   "files": [
@@ -8,17 +11,17 @@
     "src"
   ],
   "dependencies": {
-    "babel-types": "^6.26.0",
+    "@babel/types": "^7.0.0-beta.46",
     "lodash": "^4.17.10"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
+    "@babel/cli": "^7.0.0-beta.46",
+    "@babel/core": "^7.0.0-beta.46",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.46",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.46",
+    "@babel/preset-env": "^7.0.0-beta.46",
+    "@babel/register": "^7.0.0-beta.46",
     "babel-eslint": "^8.2.3",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-register": "^6.26.0",
     "eslint": "^4.19.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
@@ -33,12 +36,12 @@
     "build:changelog": "github_changelog_generator --max-issues 1000",
     "lint": "prettier --list-different \"src/**/*.js\" \"test/test.js\" && eslint \"src/**/*.js\" \"test/test.js\"",
     "lint:fix": "prettier --write \"src/**/*.js\" \"test/test.js\" && eslint --fix \"src/**/*.js\" \"test/test.js\"",
-    "prerelease": "npm run clean && npm run build",
-    "release:major": "npm run prerelease && ta-script npm/release.sh major",
-    "release:minor": "npm run prerelease && ta-script npm/release.sh minor",
-    "release:patch": "npm run prerelease && ta-script npm/release.sh patch",
-    "test": "mocha --require babel-register \"test/*.js\"",
-    "test:watch": "npm run test -- --watch --watch-extensions js"
+    "prerelease": "yarn clean && yarn build",
+    "release:major": "yarn prerelease && ta-script npm/release.sh major",
+    "release:minor": "yarn prerelease && ta-script npm/release.sh minor",
+    "release:patch": "yarn prerelease && ta-script npm/release.sh patch",
+    "test": "mocha --require @babel/register \"test/*.js\"",
+    "test:watch": "yarn test --watch --watch-extensions js"
   },
   "keywords": [
     "babel",
@@ -51,8 +54,5 @@
   "repository": {
     "type": "git",
     "url": "git+ssh://github.com/layershifter/babel-plugin-transform-react-handled-props.git"
-  },
-  "author": "Alexander Fedyashov <a@fedyashov.com>",
-  "homepage": "https://github.com/layershifter/babel-plugin-transform-react-handled-props",
-  "license": "MIT"
+  }
 }

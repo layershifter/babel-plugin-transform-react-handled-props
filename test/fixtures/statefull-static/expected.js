@@ -1,12 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-
 export default class Example extends Component {
-
   static defaultProps = {
     active: true
   };
-
   static propTypes = {
     children: PropTypes.node
   };
@@ -14,5 +11,6 @@ export default class Example extends Component {
   render() {
     return null;
   }
-  static handledProps = ['active', 'children', 'className'];
+
+  static handledProps = ["active", "children", "className"];
 }

@@ -1,18 +1,16 @@
 cache:
-  directories:
-    - node_modules
+  yarn: true
 
 language: node_js
 
 node_js:
-  - "4"
   - "6"
   - "8"
   - "9"
   - "10"
 
 script:
-  - npm run lint
-  - npm run test
+  - yarn lint
+  - yarn test
 
-sudo: false
+sudo: required

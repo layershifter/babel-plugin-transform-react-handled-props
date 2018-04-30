@@ -1,4 +1,4 @@
-import * as t from 'babel-types'
+import * as t from '@babel/types'
 
 export const isHandledAssignment = (path, { left, right, property }) => {
   if (!t.isMemberExpression(left) || !t.isIdentifier(property, { name: 'handledProps' }))
