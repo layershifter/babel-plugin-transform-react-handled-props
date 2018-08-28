@@ -27,8 +27,8 @@
     "eslint-plugin-prettier": "^2.6.0",
     "mocha": "^5.1.1",
     "prettier": "^1.12.1",
-    "rimraf": "^2.6.2",
-    "ta-scripts": "^2.5.2"
+    "release-it": "^7.6.0",
+    "rimraf": "^2.6.2"
   },
   "scripts": {
     "clean": "rimraf lib",
@@ -37,9 +37,9 @@
     "lint": "prettier --list-different \"src/**/*.js\" \"test/test.js\" && eslint \"src/**/*.js\" \"test/test.js\"",
     "lint:fix": "prettier --write \"src/**/*.js\" \"test/test.js\" && eslint --fix \"src/**/*.js\" \"test/test.js\"",
     "prerelease": "yarn clean && yarn build",
-    "release:major": "yarn prerelease && ta-script npm/release.sh major",
-    "release:minor": "yarn prerelease && ta-script npm/release.sh minor",
-    "release:patch": "yarn prerelease && ta-script npm/release.sh patch",
+    "release:major": "yarn prerelease && release-it major",
+    "release:minor": "yarn prerelease && release-it minor",
+    "release:patch": "yarn prerelease && release-it patch",
     "test": "mocha --require @babel/register \"test/*.js\"",
     "test:watch": "yarn test --watch --watch-extensions js"
   },
