@@ -3,7 +3,7 @@
 Generates handledProps from defaultProps and propTypes during the build :sparkles:
 
 [![Build Status](https://travis-ci.org/layershifter/babel-plugin-transform-react-handled-props.svg?branch=master)](https://travis-ci.org/layershifter/babel-plugin-transform-react-handled-props)
-[![Gemnasium](https://img.shields.io/gemnasium/layershifter/babel-plugin-transform-react-handled-props.svg?style=flat)](https://gemnasium.com/layershifter/babel-plugin-transform-react-handled-props)
+[![Gemnasium](https://img.shields.io/david/layershifter/babel-plugin-transform-react-handled-props.svg?style=flat)](https://david-dm.org/layershifter/babel-plugin-transform-react-handled-props)
 [![npm](https://img.shields.io/npm/v/babel-plugin-transform-react-handled-props.svg?style=flat)](https://www.npmjs.com/package/babel-plugin-transform-react-handled-props)
 
 ## Installation
@@ -16,7 +16,7 @@ $ yarn add --dev babel-plugin-transform-react-handled-props
 
 ## Story
 
-This plugin was originally created for [Semantic React](https://github.com/Semantic-Org/Semantic-UI-React) package.
+This plugin was originally created for [Semantic UI React](https://github.com/Semantic-Org/Semantic-UI-React) package.
 It implements useful pattern with handled props by component, using it you can let down unhandled props to child component.
 
 ## Motivation
