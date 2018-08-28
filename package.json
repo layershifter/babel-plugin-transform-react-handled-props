@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-transform-react-handled-props",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Alexander Fedyashov <a@fedyashov.com>",
   "homepage": "https://github.com/layershifter/babel-plugin-transform-react-handled-props",
   "license": "MIT",
