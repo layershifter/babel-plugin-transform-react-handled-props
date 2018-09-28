@@ -1,5 +1,20 @@
 # Change Log
 
+## [1.0.2](https://github.com/layershifter/babel-plugin-transform-react-handled-props/tree/1.0.2) (2018-09-28)
+[Full Changelog](https://github.com/layershifter/babel-plugin-transform-react-handled-props/compare/1.0.1...1.0.2)
+
+**Merged pull requests:**
+
+- chore\(package\): update dependencies [\#48](https://github.com/layershifter/babel-plugin-transform-react-handled-props/pull/48) ([layershifter](https://github.com/layershifter))
+
+## [1.0.1](https://github.com/layershifter/babel-plugin-transform-react-handled-props/tree/1.0.1) (2018-08-28)
+[Full Changelog](https://github.com/layershifter/babel-plugin-transform-react-handled-props/compare/v1.0.0...1.0.1)
+
+**Merged pull requests:**
+
+- chore\(package\): bump all dependencies [\#45](https://github.com/layershifter/babel-plugin-transform-react-handled-props/pull/45) ([layershifter](https://github.com/layershifter))
+- chore\(package\): use release-it [\#44](https://github.com/layershifter/babel-plugin-transform-react-handled-props/pull/44) ([layershifter](https://github.com/layershifter))
+
 ## [v1.0.0](https://github.com/layershifter/babel-plugin-transform-react-handled-props/tree/v1.0.0) (2018-04-30)
 [Full Changelog](https://github.com/layershifter/babel-plugin-transform-react-handled-props/compare/v0.3.2...v1.0.0)
 
