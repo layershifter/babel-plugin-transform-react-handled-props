@@ -27,6 +27,7 @@ describe('fixtures', () => {
 
   fixtureAssert('hoc')
   fixtureAssert('hoc-unnamed')
+  fixtureAssert('hoc-unnamed-functional-default-export')
 
   fixtureAssert('ignored', { ignoredProps: ['as'] })
 
