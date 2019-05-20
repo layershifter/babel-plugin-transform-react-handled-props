@@ -41,7 +41,7 @@
     "release:minor": "yarn prerelease && release-it minor",
     "release:patch": "yarn prerelease && release-it patch",
     "test": "mocha --require @babel/register \"test/*.js\"",
-    "test:watch": "yarn test --watch --watch-extensions js"
+    "test:watch": "yarn test --watch"
   },
   "keywords": [
     "babel",
