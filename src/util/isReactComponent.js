@@ -35,6 +35,18 @@ const isReactClass = path => isClass(path) && hasSuperClass(path) && hasRenderMe
 
 const isReactFunction = path => isFunction(path) && containsJSX(path.get('body'))
 
-const isReactComponent = path => isReactClass(path) || isReactFunction(path)
+const isReactExotic = path => {
+  if (!t.isFunction(path)) return false
+
+  const callee = path.parent.callee
+
+  if (!t.isMemberExpression(callee)) return false
+  return (
+    t.isIdentifier(callee.property, { name: 'memo' }) ||
+    t.isIdentifier(callee.property, { name: 'forwardRef' })
+  )
+}
+
+const isReactComponent = path => isReactClass(path) || isReactFunction(path) || isReactExotic(path)
 
 export default isReactComponent

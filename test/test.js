@@ -25,10 +25,17 @@ const fixtureAssert = (fixtureDir, options = {}) =>
 describe('fixtures', () => {
   fixtureAssert('attr-string')
 
+  fixtureAssert('forward-ref-function')
+  fixtureAssert('forward-ref-inline')
+
   fixtureAssert('hoc')
   fixtureAssert('hoc-unnamed')
 
   fixtureAssert('ignored', { ignoredProps: ['as'] })
+
+  fixtureAssert('memo')
+  fixtureAssert('memo-function')
+  fixtureAssert('memo-inline')
 
   fixtureAssert('multiple')
   fixtureAssert('multiple-arrow')
