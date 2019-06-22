@@ -4,13 +4,12 @@ cache:
 language: node_js
 
 node_js:
-  - "6"
   - "8"
-  - "9"
   - "10"
+  - "12"
 
 install:
-  - yarn install --ignore-engines
+  - yarn install
 
 script:
   - yarn lint
