@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.0.0
+
+* chore(package): drop Node 6, update dependencies (#66)
+
+## 1.1.0
+
+* feat(plugin): add support for forwardRef() and memo() (#63)
+
 ## [1.0.2](https://github.com/layershifter/babel-plugin-transform-react-handled-props/tree/1.0.2) (2018-09-28)
 [Full Changelog](https://github.com/layershifter/babel-plugin-transform-react-handled-props/compare/1.0.1...1.0.2)
 
