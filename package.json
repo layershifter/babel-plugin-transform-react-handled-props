@@ -10,6 +10,9 @@
     "lib",
     "src"
   ],
+  "engines": {
+    "node": ">=8"
+  },
   "dependencies": {
     "@babel/types": "^7.4.4",
     "lodash": "^4.17.11"
