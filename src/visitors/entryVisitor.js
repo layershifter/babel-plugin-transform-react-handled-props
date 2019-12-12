@@ -1,9 +1,14 @@
-import { getEntryIdentifier, isReactComponent } from '../util'
+import { getEntryIdentifier, isReactComponent, UnnamedClass } from '../util'
 
 const entriesVisitor = {
   'Class|Function': (path, state) => {
-    if (!isReactComponent(path)) return
-    state.createEntry(getEntryIdentifier(path), path)
+    if (isReactComponent(path)) {
+      const entryIdentifier = getEntryIdentifier(path)
+
+      if (entryIdentifier || entryIdentifier === UnnamedClass) {
+        state.createEntry(entryIdentifier, path)
+      }
+    }
   },
 }
 
