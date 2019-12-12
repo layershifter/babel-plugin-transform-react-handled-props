@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.1.0
+
+* feat(plugin): support unnamed default exports (#70)
+
 ## 2.0.0
 
 * chore(package): drop Node 6, update dependencies (#66)
