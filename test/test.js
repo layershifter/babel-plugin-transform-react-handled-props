@@ -54,4 +54,8 @@ describe('fixtures', () => {
   fixtureAssert('stateless-arrow')
   fixtureAssert('stateless-assignment')
   fixtureAssert('stateless-predefined')
+
+  fixtureAssert('unnamed-class')
+  fixtureAssert('unnamed-function')
+  fixtureAssert('unnamed-function-hoc')
 })

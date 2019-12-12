@@ -1,7 +1,7 @@
 export { default as appendProps } from './appendProps'
 
 export { default as getClassDeclaration } from './getClassDeclaration'
-export { default as getEntryIdentifier } from './getEntryIdentifier'
+export { default as getEntryIdentifier, UnnamedClass } from './getEntryIdentifier'
 export { default as getExpressionIdentifier } from './getExpressionIdentifier'
 export { default as getObjectKeys } from './getObjectKeys'
 

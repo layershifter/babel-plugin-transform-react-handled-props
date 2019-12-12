@@ -3,7 +3,9 @@ import _ from 'lodash'
 
 import getVariableDeclarator from './getVariableDeclarator'
 
-const getPositionIdentifier = ({ node }) => _.get(node, 'id.name', `${node.start}:${node.end}`)
+const getPositionIdentifier = ({ node }) => _.get(node, 'id.name')
+
+export const UnnamedClass = '___UnnamedClass___'
 
 const getFunctionIdentifier = path => {
   if (t.isFunctionDeclaration(path)) return getPositionIdentifier(path)
@@ -15,8 +17,13 @@ const getFunctionIdentifier = path => {
 }
 
 const getEntryIdentifier = path => {
-  if (t.isClass(path)) return getPositionIdentifier(path)
-  if (t.isFunction(path)) return getFunctionIdentifier(path)
+  if (t.isClass(path)) {
+    return getPositionIdentifier(path) || UnnamedClass
+  }
+
+  if (t.isFunction(path)) {
+    return getFunctionIdentifier(path)
+  }
 
   throw path.buildCodeFrameError('`path` must be Class or Function definition')
 }
